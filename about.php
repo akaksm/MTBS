@@ -22,7 +22,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <section class="about">
         <div class="main">

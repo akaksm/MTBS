@@ -2,13 +2,10 @@
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: create.php');
-    exit;
-}
-
-
-include 'common_header.php';
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location: create.php');
+//     exit;
+// }
 
 
 

@@ -15,16 +15,17 @@
         <li><a href="contact.php" >Contact</a></li>
       </ul>
       <?php
-    // Check if the user is logged in (session is set)
+
     if (isset($_SESSION['user_id'])) {
-        if (isset($_SESSION['user_id'])) {
-            echo '<a href="logout.php" class="action_btn">Logout</a>';
-        } else {
-            echo '<a href="profile.php" class="action_btn">Profile</a>';
-        }
+      if (basename($_SERVER['PHP_SELF']) === 'profile.php' && isset($_SESSION['user_id'])) {
+        echo '<a href="logout.php" class="action_btn">Logout</a>';
+      } else {
+        echo '<a href="profile.php" class="action_btn">Profile</a>';
+      }
     } else {
-      // If not logged in, show "Login" button and link it to the login page
+
       echo '<a href="create.php" class="action_btn">Login</a>';
+      
     }
     ?>
       <div class="toggle_btn">

@@ -1,11 +1,11 @@
 <?php
 
-session_start();
+// session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: create.php');
-    exit;
-}
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location: create.php');
+//     exit;
+// }
 
 include 'connect.php';
 
@@ -42,7 +42,7 @@ if(isset($_POST['submit'])){
             </script>
             <?php
         }else{
-            // Handle database insertion failure
+
             ?>
             <script>
                 alert("Error: Data could not be inserted.");
@@ -53,6 +53,8 @@ if(isset($_POST['submit'])){
     }
 
 }
+
+mysqli_close($con);
 
 ?>
 
@@ -74,30 +76,9 @@ if(isset($_POST['submit'])){
     <link rel="shortcut icon" type="image/png" href="img/icon.png">
 </head>
 <body>
-    <video autoplay loop muted plays-inline class="back-video">
-        <source src="img/vid.mp4" type="video/mp4">
-      </video>
-    
-      <header>
-    
-    
-        <div class="navbar">
-    
-          <div class="logo"><a href="index.php">KSM CINEMA</a></div>
-          <ul class="links">
-            <li><a href="index.php" >Home</a></li>
-            <li><a href="about.php" >About</a></li>
-            <li><a href="services.php" >services</a></li>
-            <li><a href="contact.php" >Contact</a></li>
-          </ul>
-          <a href="create.php" class="action_btn" onclick="login()">Log In</a>
-          <div class="toggle_btn">
-            <i class="fa-solid fa-bars"></i>
-          </div>
-        </div>
-      </header>
 
-      
+
+<?php include 'header.php'; ?>
 
  <div class="wrapper">
    
@@ -136,7 +117,7 @@ if(isset($_POST['submit'])){
         </form>
 
         <!------------------- registration form -------------------------->
-        <form name="registrationFormm" class="register-container" id="register" onsubmit="return validateForm()" method="post" enctype="multipart/form-data" action="#">
+        <form name="registrationFormm" class="register-container" id="register" onsubmit="return validateForm()" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="top">
                 <span>Have an account? <a href="#" onclick="login()">Login</a></span>
                 <h2>Sign Up</h2>
@@ -171,7 +152,7 @@ if(isset($_POST['submit'])){
                     <label><a href="terms.php">Terms & conditions</a></label>
                 </div>
             </div>
-</form>
+        </form>
     </div>
 </div>  
 
