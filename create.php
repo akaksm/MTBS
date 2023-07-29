@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: create.php');
+    exit;
+}
+
 include 'connect.php';
 
 if(isset($_POST['submit'])){
@@ -10,7 +17,7 @@ if(isset($_POST['submit'])){
 
     $cust_pass = password_hash($pass, PASSWORD_BCRYPT);
 
-    $emailquery = " SELECT * FROM customer WHERE cust_email='$cust_email' ";
+    $emailquery = " SELECT * FROM users WHERE cust_email='$cust_email' ";
     $query = mysqli_query($con,$emailquery);
 
     $emailcount = mysqli_num_rows($query);
@@ -24,7 +31,7 @@ if(isset($_POST['submit'])){
     }
     else{
 
-        $sql="INSERT INTO `customer`(`cust_id`, `fname`, `lname`, `cust_email`, `cust_pass`) VALUES ('','$fname','$lname','$cust_email','$cust_pass')";
+        $sql="INSERT INTO `users`(`cust_id`, `fname`, `lname`, `cust_email`, `cust_pass`) VALUES ('','$fname','$lname','$cust_email','$cust_pass')";
 
         $result=mysqli_query($con,$sql);
 

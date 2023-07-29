@@ -1,7 +1,7 @@
 <?php
-// login.php
 
-// Include the connect.php file to establish a database connection
+
+
 include 'connect.php';
 
 if (isset($_POST['login_submit'])) {
@@ -9,7 +9,7 @@ if (isset($_POST['login_submit'])) {
     $loginPassword = mysqli_real_escape_string($con, $_POST['login_password']);
 
     // Query the database to check if the username/email exists
-    $loginQuery = "SELECT cust_id, fname, lname, cust_pass FROM customer WHERE cust_email = ?";
+    $loginQuery = "SELECT cust_id, fname, lname, cust_pass FROM users WHERE cust_email = ?";
     $stmt = mysqli_prepare($con, $loginQuery);
     mysqli_stmt_bind_param($stmt, 's', $loginUsername);
     mysqli_stmt_execute($stmt);

@@ -1,36 +1,91 @@
 <?php
+
 session_start();
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // If not logged in, redirect to login.php
     header('Location: create.php');
     exit;
 }
+
+
+include 'common_header.php';
+
+
+
+include 'connect.php';
+
+
+$userID = $_SESSION['user_id'];
+$profileQuery = "SELECT * FROM users WHERE cust_id='$userID'";
+$profileResult = mysqli_query($con, $profileQuery);
+$profileData = mysqli_fetch_assoc($profileResult);
+
+
+if (isset($_POST['update_profile'])) {
+    $firstName = mysqli_real_escape_string($con, $_POST['first_name']);
+    $lastName = mysqli_real_escape_string($con, $_POST['last_name']);
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+
+
+
+
+    $updateQuery = "UPDATE users SET fname='$firstName', lname='$lastName', cust_email='$email' WHERE cust_id='$userID'";
+    mysqli_query($con, $updateQuery);
+
+
+    header('Location: profile.php');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Your header content here -->
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>KSM | Cinemas</title>
+  <link rel="shortcut icon" type="image/png" href="img/icon.png">
+  <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-    <!-- Your navigation bar and other content here -->
 
-    <!-- Profile Dashboard -->
-    <div class="profile-dashboard">
-        <h1>Welcome, <?php echo $_SESSION['username']; ?></h1>
-        <p>Email: <?php echo $_SESSION['cust_email']; ?></p>
-        <!-- Add more user information here -->
+<?php include 'header.php'; ?>
 
-        <!-- Log out button -->
-        <form action="logout.php" method="post">
-            <input type="submit" value="Log Out">
-        </form>
+<section class="profile-section">
+    <div class="container">
+        <h2>My Profile</h2>
+        <div class="profile-info">
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" id="first_name" value="<?php echo $profileData['fname']; ?>"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" id="last_name" value="<?php echo $profileData['lname']; ?>"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" value="<?php echo $profileData['cust_email']; ?>"
+                           required>
+                </div>
+                <!-- You can add more fields for photo and password update as needed -->
+                <div class="form-group">
+                    <input type="submit" name="update_profile" value="Update Profile">
+                </div>
+            </form>
+        </div>
     </div>
+</section>
 
-    <!-- Your footer content here -->
+
+<?php include 'footer.php'; ?>
 
 </body>
 </html>
