@@ -13,7 +13,7 @@ body{
   background-position: center;
 }
 
-
+/* Nav CSS */
 li{
   list-style: none;
 }
@@ -138,12 +138,7 @@ header{
 
 /* Video CSS */
 
-/* .back-video{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-} */
+
 
 .back-video {
   position: fixed;
@@ -158,12 +153,7 @@ header{
 }
 
 
-/* @media (min-aspect-ratio: 16/9){
-  .back-video{
-    width: 100%;
-    height: 100%;
-  }
-} */
+
 
 .cards{
   width: 90%;
@@ -240,7 +230,7 @@ header{
 .content h6 .bi{
   color: yellow;
   font-size: 15px;
-  margin-left: 5px;
+  margin: 0 5px 0 5px;
 }
 
 /* Now showing and Upcomming next Styling */

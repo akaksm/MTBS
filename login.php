@@ -36,7 +36,10 @@ if (isset($_POST['login_submit'])) {
             <script>
                 alert("Incorrect password. Please try again.");
             </script>
+            
             <?php
+                header('Location: create.php');
+                exit;
         }
     } else {
         // User not found

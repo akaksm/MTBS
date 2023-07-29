@@ -2,10 +2,6 @@
 
 session_start();
 
-// if (!isset($_SESSION['user_id'])) {
-//     header('Location: create.php');
-//     exit;
-// }
 
 
 
@@ -56,7 +52,7 @@ if (isset($_POST['update_profile'])) {
     <div class="container">
         <h2>My Profile</h2>
         <div class="profile-info">
-            <form action="" method="post">
+            <form action="" method="post" class="form-box">
                 <div class="form-group">
                     <label for="first_name">First Name:</label>
                     <input type="text" name="first_name" id="first_name" value="<?php echo $profileData['fname']; ?>"
