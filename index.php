@@ -50,89 +50,41 @@ if (!isset($_SESSION['user_id'])) {
       <h3>Now Showing</h3>
   </section>
 
+  <?php
+  include "connect.php";
+  $sql = "SELECT * FROM movietable";
+  ?>
+
   <section class="cards">
 
-    <div class="bx">
-      <img src="img/c1.jpeg" alt="MI-4">
-      <div class="content">
-        <h3>MI-4</h3>
-        <p>Action, Drama, Fantsy</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
+  <?php
+    if($result = mysqli_query($con,$sql)){
+      if(mysqli_num_rows($result)>0){
+        for($i=0; $i<=8; $i++){
+          $row = mysqli_fetch_array($result);
+          echo '<div class="bx">';
+          echo '<a href="movieinfo.php?id=' . $row['movieID'] . '">';
+          echo   '<img src="data:image/jpeg;base64, ' . base64_encode($row['movieImg']) .'" alt="MI-4">';
+          echo   '<div class="content">';
+          echo     '<h3>' . $row['movieTitle'] . '</h3>';
+          echo     '<p>' . $row['movieGenre'] . '</p>';
+          echo     '<h6><span>IMDB</span><i class="bi bi-star-fill"></i>' . $row['rating'] . '</h6>';
+          echo   '</div>';
+          echo   '</a>';
+          echo '</div>';
+        }
+        mysqli_free_result($result);
+      } else   {
+        echo '<h4 class="no-annot">No Booking to our movies right now<?h4>';
+      }
+    } else {
+      echo "ERROR: Couldnt not able to execute $sql. ";
+      mysqli_error($con);
+    }
 
-    <div class="bx">
-      <img src="img/c2.jpg" alt="MI-4">
-      <div class="content">
-        <h3>OPPENHEIMER</h3>
-        <p>Drama, Biography</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c3.jpg" alt="MI-4">
-      <div class="content">
-        <h3>BARBIE</h3>
-        <p>Comedy, Adventure</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c4.jpg" alt="MI-4">
-      <div class="content">
-        <h3>BAGAN</h3>
-        <p>Social Drama</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c5.jpg" alt="MI-4">
-      <div class="content">
-        <h3>INSIDIOUS</h3>
-        <p>Horror, Thriller</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c6.jpg" alt="MI-4">
-      <div class="content">
-        <h3>INDIANA JHONES</h3>
-        <p>Action, Adventure</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c7.jpg" alt="MI-4">
-      <div class="content">
-        <h3>S P K K</h3>
-        <p>Comedy, Drama,</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c8.jpg" alt="MI-4">
-      <div class="content">
-        <h3>BIHE PASS</h3>
-        <p>Love Story</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
-    <div class="bx">
-      <img src="img/c9.jpg" alt="MI-4">
-      <div class="content">
-        <h3>JAARI</h3>
-        <p>Drama</p>
-        <h6><span>IMDB</span><i class="bi bi-star-fill"></i>9.0</h6>
-      </div>
-    </div>
-
+    mysqli_close($con);
+  ?>
+ 
   </section>
 
   <section class="showing next">

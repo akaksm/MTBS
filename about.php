@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="css/about.css">
     <title>KSM | CINEMA</title>
     <link rel="shortcut icon" type="image/png" href="img/icon.png">
-  <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
 </head>
 <body>
 

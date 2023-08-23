@@ -10,6 +10,7 @@
     background-color: #020202;
     background-size: cover;
     background-position: center;
+    /* overflow: hidden; */
   }
 
   /* Nav CSS */
@@ -52,7 +53,7 @@
   
   .navbar .links{
     display: flex;
-    gap: 2rem;
+    gap: 4rem;
   }
   
   .navbar .toggle_btn{

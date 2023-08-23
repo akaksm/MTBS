@@ -11,6 +11,7 @@ body{
   background-color: #020202; 
   background-size: cover;
   background-position: center;
+  /* overflow: hidden; */
 }
 
 /* Nav CSS */
@@ -52,7 +53,7 @@ header{
 
 .navbar .links{
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .navbar .toggle_btn{
@@ -89,12 +90,14 @@ header{
 .container{
   padding: 2rem;
   margin:auto;
+  /* overflow-x: hidden; */
 }
 
 .slider-wrapper{
   position: relative;
   max-width: 48rem;
   margin: 0 auto;
+  /* overflow-x: hidden; */
 }
 
 .slider{
@@ -153,7 +156,7 @@ header{
 }
 
 
-
+/* Movie cards css */
 
 .cards{
   width: 90%;
@@ -178,6 +181,10 @@ header{
   width: 100%;
   height: 100%;
   border-radius: 20px;
+}
+
+.bx:hover img{
+  transform: scale(1.1);
 }
 
 .bx .content{

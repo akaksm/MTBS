@@ -1,0 +1,499 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body{
+  width: 100%;
+  height: 100vh;
+  background-color: #020202; 
+  background-size: cover;
+  background-position: center;
+  /* overflow: hidden; */
+}
+
+  /* Nav-bar css */
+  
+  li{
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+  }
+  
+  a:hover{
+    color: orange;
+  }
+  
+  header{
+    position: relative;
+    padding: 0 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .navbar{
+    width: 100%;
+    height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .navbar .logo a{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar .links{
+    display: flex;
+    gap: 4rem;
+  }
+  
+  .navbar .toggle_btn{
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .action_btn{
+    background-color: orange;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: scale 0.2 ease;
+  }
+  
+  .action_btn:hover{
+    scale: 0.96;
+    color: #fff;
+  }
+  
+  .action_btn:active{
+    scale: 0.95;
+  }
+
+  /* Video CSS */
+
+  .back-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+/* section css */
+
+.movie-booking-info{
+  width: 100%;
+  margin: 5% 0;
+}
+
+.h1{
+  font-size: 50px;
+  margin: 10px 50px;
+}
+
+.movie-details {
+  
+  color: orange;
+}
+
+.show-detail {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px 20px 20px 20px;
+  margin: 40px 50px 100px;
+  height: 60vh;
+}
+
+.movies-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.movie-trailer{
+  margin: 0 20px;
+}
+
+.movie-trailer iframe {
+  height: 54vh;
+  box-sizing: content-box;
+  border-radius: 5px;
+}
+
+.movies-info {
+  padding: 20px;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+
+.h11 {
+  font-size: 36px;
+  color: #fff;
+}
+
+.movies-info h4:before {
+  position: absolute;
+  content: "";
+  width: 45px;
+  height: 2px;
+  background: orange;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 3px;
+  margin: 5px 0;
+}
+
+.movies-info h4 {
+  color: orange;
+  font-size: 15px;
+  position: relative;
+  padding-left: 55px;
+  margin: 5px 0;
+}
+
+.movies-info p {
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  margin: 5px 0;
+}
+
+.show-detail .movies-info ul.movie-cast {
+  list-style: none;
+  margin: 5px 0;
+}
+
+ul.movie-cast li {
+  color: #fff;
+  margin: 5px 0;
+}
+
+ul.movie-cast li span {
+  color: orange;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.view-time {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px 20px 20px 20px;
+  margin: 100px 50px;
+  height: 60vh;
+}
+
+/* .sfInnerPage .seat-status-info {
+  padding: 0;
+} */
+
+.nowshowing-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seat-status-info {
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+}
+
+h2, .h2 {
+  font-size: 34px;
+  margin-bottom: 26px;
+}
+
+h2.inner-header {
+  color: orange;
+}
+
+.nowshowing-detail h2 {
+  border-left: 3px solid;
+  padding-left: 10px;
+}
+
+.seat-status-info > ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  background: transparent;
+  padding: 5px 10px;
+}
+
+.seat-status-info ul li {
+  color: #000;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.seat-status-info ul li span.sold {
+  background: #e11e26;
+}
+
+.seat-status-info ul li span.booked {
+  background: #ffc107;
+}
+
+.seat-status-info ul li span.available {
+  background: #4caf50;
+}
+
+.seat-status-info ul li span {
+  margin: 0px 15px 0px 5px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.selectShowDays {
+  overflow: auto;
+  max-width: 100%;
+}
+
+.selectShowDays > ul {
+  color: #ffffff;
+  list-style: outside none none;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px 5px;
+}
+
+.selectShowDays ul > li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.selectShowDays ul > li a.tomm {
+  line-height: 3;
+}
+
+.selectShowDays ul > li a {
+  border: 2px solid #C5C5C5;
+  color: #C5C5C5;
+  transition: all 0.5s ease-in-out;
+}
+.selectShowDays ul > li a {
+  border: 2px solid #C5C5C5;
+  border-radius: 80px;
+  display: inline-block;
+  float: left;
+  height: 55px;
+  width: 55px;
+  line-height: 1.4;
+  text-align: center;
+  font-size: 14px;
+  color: #C5C5C5;
+  padding: 5px 0px;
+}
+
+.sfInnerPage .selectShowDays ul > li.active a, .sfInnerPage .selectShowDays ul > li a:hover {
+  color: #4caf50;
+  border-color: #4caf50;
+}
+
+.selectShowDays ul > li a.tomm {
+  line-height: 3;
+}
+.selectShowDays ul > li.active a, .selectShowDays ul > li a:hover {
+  border: 2px solid #0f9a15;
+  color: #0f9a15;
+  transition: all 0.5s ease-in-out;
+}
+
+.audi-time {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.audi-info {
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  background: #9b9b9b;
+  padding: 16px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  width: 150px;
+}
+
+.audi-info p span {
+  font-size: 14px;
+  width: 100%;
+  display: block;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+.audi-info p span {
+  font-size: 14px;
+  width: 100%;
+  display: block;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+ul.show-time-info {
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+
+ul.show-time-info li {
+  display: inline-flex;
+  margin: 0.5rem;
+}
+
+.show-time-info a.available {
+  background: #4caf50 !important;
+}
+
+ul.show-time-info li a {
+  color: #ededed;
+  padding: 10px 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+a.available {
+  color: #4caf50;
+}
+a {
+  text-decoration: none;
+}
+
+a.fast-filling, li.booked {
+  background: #ffc107;
+}
+
+
+
+  /* footer css */
+
+.footer{
+    background: #000;
+    height: auto;
+    width: 100vw;
+    font-family: "Open Sans";
+    padding-top: 40px;
+    color: #fff;
+  }
+  
+  .footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+   
+  .footer-content h3{
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 3rem;
+    color: #fff;
+  }
+  
+  .footer-content p{
+    max-width: 500px;
+    margin: 10px auto;
+    line-height: 28px;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  .socials{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0 3rem 0;
+  }
+  
+  .socials li{
+    margin: 0 10px;
+  }
+  
+  .socials a{
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .socials a i{
+    font-size: 1.1rem;
+    transition: color .4s ease;
+  }
+  
+  .socials a:hover i{
+    color: orange;
+  }
+  
+  
+  
+  .footer-middle{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0 3rem 0;
+    color: #fff;
+  }
+  
+  .footer-bottom{
+    background: transparent;
+    width: 100vw;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .footer-bottom p{
+    font-size: 14px;
+    word-spacing: 9px;
+    text-transform: capitalize;
+  }
+  
+  .footer-bottom span{
+    text-transform: uppercase;
+    opacity: .4;
+    font-weight: 200;
+    color: orange;
+  }
