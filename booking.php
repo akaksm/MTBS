@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: create.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,7 +24,6 @@
   </head>
   <body>
 
-  <?php include 'header.php'; ?>
 
   <div class="booking-overlay bookingwrap is-visible" >
     <div id="main-booking" class="bookingwrap is-visible">
@@ -305,7 +315,6 @@
   </div>
 
 
-  <?php include 'footer.php'; ?>
     
   </body>
 </html>

@@ -1,4 +1,46 @@
+<?php
+session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: create.php');
+    exit;
+}
+
+
+if (isset($_GET['id'])) {
+    $movieId = $_GET['id'];
+
+    include "connect.php";
+
+    
+    $sql = "SELECT * FROM movietable WHERE movie_id = $movieId";
+
+    if ($result = mysqli_query($con, $sql)) {
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_array($result);
+
+           
+            $iframeSrc = $row['iframe'];
+            $movieTitle = $row['movieTitle'];
+            $movieGenre = $row['movieGenre'];
+            $description = $row['description'];
+            $movieDirector = $row['movieDirector'];
+            $movieActors = $row['movieActors'];
+            $movieRelDate = $row['movieRelDate'];
+            $movieDuration = $row['movieDuration'];
+
+            
+            mysqli_close($con);
+        } else {
+            echo '<h4 class="no-annot">Movie not found</h4>';
+        }
+    } else {
+        echo "ERROR: Couldn't execute the query: " . mysqli_error($con);
+    }
+} else {
+    echo '<h4 class="no-annot">Movie ID not provided</h4>';
+}
+?>
 
 
 
@@ -28,22 +70,22 @@
         <div class="movies-details">
 
           <div class="movie-trailer">
-            <iframe id="videoFrame" width="100%" height="650" src="https://www.youtube.com/embed/vhwr4vc_GY0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen="" style="width: 100%;"></iframe>
+            <iframe id="videoFrame" width="100%" height="650" <?php echo $iframeSrc; ?> frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen="" style="width: 100%;"></iframe>
           </div>
 
           <div class="movies-info" itemscope="" itemtype="https://schema.org/Movie">
-            <h1 class="h11">Gadar 2</h1>
-            <h4>Action, Drama</h4>
-            <p itemprop="description">Set during the Indo-Pakistani War of 1971, Tara Singh returns to Pakistan to bring his son, Charanjeet, back.</p>
+            <h1 class="h11"><?php echo $movieTitle; ?></h1>
+            <h4><?php echo $movieGenre; ?></h4>
+            <p itemprop="description"><?php echo $description; ?></p>
             <ul class="movie-cast">
               <li itemprop="director" itemscope="" itemtype="https://schema.org/Person">
-                <span itemprop="name">Director :&nbsp;</span> Anil Sharma</li>
+                <span itemprop="name">Director :&nbsp;</span><?php echo $movieDirector; ?></li>
               <li itemprop="actor" itemscope="" itemtype="https://schema.org/Person">
-                <span itemprop="name">Cast :&nbsp;</span> Sunny Deol, Ameesha Patel, Simrat Kaur</li>
+                <span itemprop="name">Cast :&nbsp;</span> <?php echo $movieActors; ?></li>
               <li>
-                <span>Release On :&nbsp;</span> August 11, 2023</li>
+                <span>Release On :&nbsp;</span> <?php echo $movieRelDate; ?></li>
               <li>
-                <span>Duration :&nbsp;</span> 2 hours 50 mins</li>
+                <span>Duration :&nbsp;</span> <?php echo $movieDuration; ?></li>
             </ul>
             <div class="detail-timing">
 

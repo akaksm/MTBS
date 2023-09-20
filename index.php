@@ -63,8 +63,8 @@ if (!isset($_SESSION['user_id'])) {
         for($i=0; $i<=8; $i++){
           $row = mysqli_fetch_array($result);
           echo '<div class="bx">';
-          echo '<a href="movieinfo.php?id=' . $row['movieID'] . '">';
-          echo   '<img src="data:image/jpeg;base64, ' . base64_encode($row['movieImg']) .'" alt="MI-4">';
+          echo '<a href="movieinfo.php?id=' . $row['movie_id'] . '">';
+          echo   '<img src="data:image/jpeg;base64, ' . base64_encode($row['movieimg']) .'" alt="MI-4">';
           echo   '<div class="content">';
           echo     '<h3>' . $row['movieTitle'] . '</h3>';
           echo     '<p>' . $row['movieGenre'] . '</p>';
