@@ -1,6 +1,5 @@
 <?php
-include 'dbconfig.php';
-
+require_once('../connect.php');
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 
 if ($id =='') {
@@ -9,10 +8,10 @@ if ($id =='') {
 	exit;
 }
 
-$sql = "DELETE FROM tbl_guests WHERE id = $id";
+$sql = "DELETE FROM users WHERE custid = $id";
 
 $result = $mysqli->query($sql);
 
-header('Location: index.php');
+header('Location: .admin/index.php');
 
 ?>

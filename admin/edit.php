@@ -1,5 +1,5 @@
 <?php
-include 'dbconfig.php';
+require_once('../connect.php');
 
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 
@@ -9,9 +9,9 @@ if ($id =='') {
 	exit;
 }
 
-$sql = "SELECT * FROM tbl_guests WHERE id = $id";
+$sql = "SELECT * FROM users WHERE cust_id = $id";
 
-$result = $mysqli->query($sql);
+$result = mysqli_query($con,$sql);
 
 if ($result->num_rows != 1) {
 	print "Invalid ID<br>";
@@ -26,7 +26,8 @@ $row = $result->fetch_assoc();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update Guest</title>
+	<title>KSM | Cinemas</title>
+  <link rel="shortcut icon" type="image/png" href="img/icon.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -34,25 +35,25 @@ $row = $result->fetch_assoc();
 <body>
 
 <div class="container">
-<h1>Update Guest</h1>
+<h1>Update User</h1>
 <form action="process.php" method="post">
-<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+<input type="hidden" name="cust_id" value="<?php echo $row['cust_id'];?>">
 <table>
 	<tr>
-		<td>Name</td>
-		<td><input class="form-control"  type="text" name="name" value="<?php echo $row['name'];?>"></td>
+		<td>First Name</td>
+		<td><input class="form-control"  type="text" name="fname" value="<?php echo $row['fname'];?>"></td>
 	</tr>
 	<tr>
-		<td>Address</td>
-		<td><input class="form-control"  type="text" name="address" value="<?php echo $row['address'];?>"></td>
-	</tr>
-	<tr>
-		<td>Mobile</td>
-		<td><input class="form-control"  type="text" name="mobile" value="<?php echo $row['mobile'];?>"></td>
+		<td>Sirname</td>
+		<td><input class="form-control"  type="text" name="lname" value="<?php echo $row['lname'];?>"></td>
 	</tr>
 	<tr>
 		<td>Email</td>
-		<td><input class="form-control"  type="text" name="email" value="<?php echo $row['email'];?>"></td>
+		<td><input class="form-control"  type="email" name="cust_email" value="<?php echo $row['cust_email'];?>"></td>
+	</tr>
+	<tr>
+		<td>Password</td>
+		<td><input class="form-control"  type="password" name="cust_pass" value="<?php echo $row['cust_pass'];?>"></td>
 	</tr>
 	<tr>
 		<td colspan="2">
