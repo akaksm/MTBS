@@ -383,17 +383,17 @@ p {
 #ulBookedSeats, #ulFoods {
     width: calc(100% - 70px);
     float: right;
-    display: inline-block;
+    display: flex;
 }
 
 .list-items li small, .sfSummaryDetails ul li {
-    background: transparent;
+    background: black;
     color: #fff;
     display: flex;
     flex-direction: column;
     border-radius: 24px;
-    padding: 3px 10px;
-    margin: 0px 5px 5px 5px;
+    padding: 3px 5px;
+    margin: 0px 9px 5px 6px;
     font-size: 12px;
 }
 

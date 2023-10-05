@@ -183,9 +183,9 @@ header{
   border-radius: 20px;
 }
 
-.bx:hover img{
+/* .bx:hover img{
   transform: scale(1.1);
-}
+} */
 
 .bx .content{
   position: absolute;

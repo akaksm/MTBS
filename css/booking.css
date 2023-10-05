@@ -1,27 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
-/* CSS for profile-section */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
 }
 
-body{
-  width: 100%;
-  height: 100vh;
-  background-color: #020202; 
-  background-size: cover;
-  background-position: center;
+body {
+  margin:0;
+  background-color: transparent;
+  color: transparent;
+  /* padding-left: 400px; */
 }
-
-
-
-
-/* Video CSS */
-
-
 
 .back-video {
   position: fixed;
@@ -31,300 +19,234 @@ body{
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
+  z-index: -1000;
   transform: translateX(-50%) translateY(-50%);
 }
 
-/* Section css*/
-
 .booking-overlay.is-visible {
-    position: relative;
-    height: 105vh;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    bottom: 0;
-    right: 0;
-    left: 0px;
-    align-items: center;
-    z-index: 9999;
-    overflow: hidden;
+  position: relative;
+  height: auto;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  bottom: 0;
+  right: 0;
+  left: 0px;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
 }
 
 #main-booking.is-visible, #main-trailer.is-visible {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-    transform: translateY(0px);
-    height: inherit;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  transform: translateY(0px);
+  height: inherit;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 #main-booking, #main-trailer {
-    overflow: auto;
+  overflow: auto;
 }
 
 #main-booking, #main-trailer {
-    backface-visibility: hidden;
-    background: #1b1b1b none repeat scroll 0 0;
-    left: 0;
-    position: fixed;
-    top: 0;
-    transform: translateY(-310%);
-    transition-duration: 0.5s;
-    transition-property: transform;
-    width: 100vw;
-    z-index: 9999;
+  backface-visibility: hidden;
+  background: #1b1b1b none repeat scroll 0 0;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translateY(-310%);
+  transition-duration: 0.5s;
+  transition-property: transform;
+  width: 100vw;
+  z-index: 9999;
 }
 
 .booking-left-panel {
-    align-items: center;
-    display: flex;
-    padding: 8px 20px;
-    position: sticky;
-    top: 0;
-    background: orange;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 20px;
+  position: sticky;
+  top: 0;
+  background: orange;
+}
+
+.close-menu i {
+  color: #fff;
+  margin: 3px 0 0 0;
+  font-size: 30px;
+  width: 100%;
 }
 
 .booking-details {
-  padding-right: 40px;
+padding-right: 40px;
 }
 
-    .booking-details h3 {
-      color: #fff;
-      margin: 3px 0 0 0;
-      font-size: 18px;
-      width: 100%;
-    }
-
-    .booking-details span {
-      color: #fff;
-      margin-right: 15px;
-      font-size: 12px;
-    }
-
-.sfPageSliderCloseBtn {
-  cursor: pointer;
-  background: url(../images/cancel.png) no-repeat 50% 50%;
-  width: 20px;
-  height: 18px;
-  position: absolute;
-  right: 22px;
-  top: 22px;
-}
-
-/* a {
-    color: #2e5cae;
-    text-decoration: none;
-} */
-
-.booking-right-panel {
-    background: #ffffff none repeat scroll 0 0;
-    margin: 0 auto;
-    width: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    flex: 1;
-}
-
-    .booking-right-panel .seatplan {
-        display: flex;
-        float: none;
-        overflow: hidden;
-        width: 100%;
-        height: 200vh;
-        flex-direction: column;
-    }
-
-.seatplan {
-    position: relative;
-}
-
-.seat-status {
-    background: #f2f2f2;
-    padding: 10px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-    .seat-status ul {
-      margin-bottom: 0;
-    }
-
-        .seat-status ul li {
-          display: inline-block;
-          color: #333;
-          padding: 0 10px;
-          font-size: 14px;
-        }
-
-            .seat-status ul li span {
-              width: 16px;
-              height: 16px;
-              border-radius: 2px;
-              margin-right: 10px;
-              display: inline-block;
-              margin-top: 2px;
-              float: left;
-            }
-
-.sfAvailableSeat {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    font-size: 10px;
-}
-
-.sfBlockedSeat {
-  background: black;
+.booking-details h3 {
   color: #fff;
-  font-size: 10px;
+  margin: 3px 0 0 0;
+  font-size: 18px;
+  width: 100%;
 }
 
-.sfSelectedSeat {
-    background: #5eb000;
+.booking-details span {
+  color: #fff;
+  margin-right: 15px;
+  font-size: 12px;
+}
+
+
+
+.main {
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  border-radius: 5px;
+  z-index: 1;
+  /* position: relative; */
+}
+
+.movie-container {
+  margin: 20px 0;
+}
+
+.movie-container select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 0;
+  padding: 5px 15px 5px 15px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+
+.seat {
+  color: #fff;
+  background-color: #444451;
+  height: 26px;
+  width: 32px;
+  margin: 3px;
+  padding: 3px 6px;
+  font-size: 16px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.seat.selected {
+  background-color: orange;
+  color: #fff;
+}
+
+.seat.sold {
+  color: #fff;
+  background-color: red;
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 18px;
+}
+
+.seat:nth-last-of-type(2) {
+  margin-left: 18px;
+}
+
+.seat:not(.sold):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .seat:not(.sold):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.showcase {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+.showcase li small {
+  margin-left: 2px;
+}
+
+.row {
+  display: flex;
+}
+
+.screen {
+  background-color: #fff;
+  height: 120px;
+  width: 100%;
+  margin: 15px 0;
+  transform: rotateX(-48deg);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+p.text{
+    color: black;
+    margin: 5px 0;
+}
+
+p.text span{
     color: orange;
-    font-size: 10px;
 }
 
-.sfBookedSeat {
-    background: #a3850a;
-    color: #f2f2f2;
-    font-size: 10px;
-}
-
-.sfSoldSeat {
-    background: #ab0000;
-    color: #f2f2f2;
-    font-size: 10px;
-}
-
-.sfPremiumSeat {
-    background: linear-gradient(45deg, #fde8c9, #ffb183); 
-    border: 3px solid #ffb183;
-    color: #f2f2f2;
-    font-size: 10px;
-}
-
-.sfSeat span.sfAvailableSeat, .sfSeat span.sfSelectedSeat, .sfSeat span.sfBookedSeat, .sfSeat span.sfSoldSeat, .sfSeat span.sfjustBooked, .sfSeat span.sfBlockedSeat {
-    background-image: url(../images/sprite-img.png); 
-    background-repeat: no-repeat;
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    background: #ccc;
-}
-
-.dn {
-    display: none;
-}
-
-.sfSeatPlanGrid {
-    background: transparent;
-    overflow: hidden;
-}
-
-    .sfSeatPlanGrid table {
-        margin: 10px;
-    }
-
-table {
-    max-width: 100%;
-    background-color: transparent;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-.sfSeatPlanGrid tr td {
-    padding: 5px;
-    text-align: center;
-    vertical-align: middle;
-    border-bottom: none;
-}
-
-.seatType_2, .sfSeat {
-    background-color: #fff;
-    padding: 8px 5px !important; 
-}
-
-.sfSeatPlanGrid tr td span {
-    cursor: pointer;
-    user-select: none;
-    border-radius: 3px;
-    font-size: 12px;
-}
-
-.sfScreenLocation {
-    background: url("img/img-5.png") ;
-    height: 27px;
-    line-height: 27px;
-    font-size: 14px;
-    letter-spacing: 15px;
-    /* color: #fff; */
-    text-align: center;
-    width: 70%;
-    margin: 5px auto;
-    border-radius: 0px 0px 40px 40px;
-}
-
-.sfGrandTotal {
-    font-weight: bold;
-    text-align: center;
-    color: orange;
-}
-
-    .sfGrandTotal h2 {
-        margin: 0;
-        font-size: 18px;
-        float: left;
-        margin-right: 5px;
-        font-weight: 600;
-    }
-
-.sfProceedButton {
-    background: orange;
-    float: right;
-    border-radius: 25px;
-    margin-right: 5px;
-}
-
-    .sfProceedButton .btnProceed {
-        display: block;
-        font-size: 13px;
-        padding: 4px 20px;
-        color: #fff;
-        background-color: orange;
-        text-align: center;
-        text-transform: uppercase;
-        cursor: pointer;
-        border-radius: 12px;
-        font-weight: 600;
-        line-height: 28px;
-        letter-spacing: 1px;
-    }
-
-.btnReserveTicket {
-    background: orange !important;
-    border-color: orange;
-    border-radius: 6px !important;
-    transition: all 0.5s ease-in-out;
-}
-
-.sfFloatLeft {
-    float: left;
-}
-
+.btn {
+  background-color: orange;
+  margin-top: 10px;
+  padding: 14px 40px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px dashed orange;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: .4s;
+ }
+ 
+ .btn span:last-child {
+  display: none;
+ }
+ 
+ .btn:hover {
+  transition: .4s;
+  border: 2px dashed orange;
+  background-color: #fff;
+  color: orange;
+ }
+ 
+ .btn:active {
+  background-color: orange;
+ }
+ 
  

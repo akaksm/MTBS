@@ -7,6 +7,79 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+if (isset($_POST['movieId']) && isset($_POST['screenId']) && isset($_POST['selectedSeats'])) {
+    $movieId = $_POST['movieId'];
+    $screenId = $_POST['screenId'];
+    $selectedSeatsQuery = $_POST['selectedSeats'];
+
+    $selectedSeats = explode(',', $selectedSeatsQuery);
+
+    $num = count($selectedSeats);
+
+    $updatedSeatIDs = [];
+
+    foreach ($selectedSeats as $seatID) {
+    $updatedSeatID = $seatID + 1; // Increase the seat ID by one
+    $updatedSeatIDs[] = $updatedSeatID;
+}
+
+    $updatedSeatIDsString = implode(",", $updatedSeatIDs);
+
+
+    include "connect.php";
+
+    $selectedSeatNumbers = [];
+
+    if (!empty($updatedSeatIDsString)) {
+        // Prepare the SQL query using the IN operator
+        $sql = "SELECT seat_no FROM seat WHERE seat_id IN ($updatedSeatIDsString)";
+        
+        // Execute the query
+        $result = mysqli_query($con, $sql);
+        
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                // Add each seat number to the array
+                $selectedSeatNumbers[] = $row['seat_no'];
+            }
+        } else {
+            echo "Error executing SQL query: " . mysqli_error($con);
+        }
+    }
+
+
+
+    $sqlMovie = "SELECT m.movieTitle, t.name AS theater_name, t.location AS theater_location, s.date AS showtime_date, s.start_time AS showtime_start_time, s.ticket_price
+    FROM movietable m
+    JOIN showtime s ON m.movie_id = s.movie_id
+    JOIN screen sc ON s.screen_id = sc.screen_id
+    JOIN theater t ON sc.theater_id = t.theater_id
+    WHERE m.movie_id =$movieId";
+    $resultMovie = $con->query($sqlMovie);
+
+    if ($resultShowtime = mysqli_query($con, $sqlMovie)) {
+        if ($resultShowtime->num_rows > 0) {
+            $rowShowtime = $resultShowtime->fetch_assoc();
+            $movieTitle = $rowShowtime['movieTitle'];
+            $theaterName = $rowShowtime['theater_name'];
+            $theaterLocation = $rowShowtime['theater_location'];
+            $showtimeDate = $rowShowtime['showtime_date'];
+            $showtimeStartTime = $rowShowtime['showtime_start_time'];
+            $ticketPrice = $rowShowtime['ticket_price'];
+            
+        } else {
+            echo '<h4 class="no-annot">Movie not found</h4>';
+        }
+    } else {
+        echo "ERROR: Couldn't execute the query: " . mysqli_error($con);
+    }
+
+    $total = $num*$ticketPrice;
+
+    include_once 'config.php'; 
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +116,7 @@ if (!isset($_SESSION['user_id'])) {
                                 <tbody>
                                     <tr>
                                         <td>Ticket Total</td>
-                                        <td class="sfTotal">Rs. <span id="lytA_ctl34_tdTicketTotal">250.00</span></td>
+                                        <td class="sfTotal">Rs. <span id="lytA_ctl34_tdTicketTotal"><?php echo $total; ?></span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -52,11 +125,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <tbody>
                                         <tr>
                                             <td class="sfBrdRgt sfBtdTop">Sub Total</td>
-                                            <td class="sfBtdTop sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanSubTotalTicket">250.00</span></td>
+                                            <td class="sfBtdTop sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanSubTotalTicket"><?php echo $total; ?></span></td>
                                         </tr>
                                         <tr>
                                             <td class="sfBrdRgt  sfTotal">Grand Total</td>
-                                            <td class="sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanTotal">250.00</span></td>
+                                            <td class="sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanTotal"><?php echo $total; ?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -80,22 +153,22 @@ if (!isset($_SESSION['user_id'])) {
                                 <ul class="sfSummaryDetails list-items">
                                     <li class="clearfix">
                                         <label>Movie</label>
-                                        <span class="spanMovie">Jawan</span>
+                                        <span class="spanMovie"><?php echo $movieTitle; ?></span>
                                         <p></p>
                                     </li>
                                     <li class="clearfix">
                                         <label>Screen</label>
-                                        <span class="spanScreen">Eyeplex Mall, New Baneshwor &gt; Audi 1</span>
+                                        <span class="spanScreen"><?php echo $theaterName."&nbsp&gt&nbsp".$theaterLocation; ?></span>
                                         <p></p>
                                     </li>
                                     <li class="clearfix">
                                         <label>Date</label>
-                                        <span id="spanDate">09/19/2023</span>
+                                        <span id="spanDate"><?php echo $showtimeDate; ?></span>
                                         <p></p>
                                     </li>
                                     <li class="clearfix">
                                         <label>Time</label>
-                                        <span class="spanTime">09:00 PM</span>
+                                        <span class="spanTime"><?php echo $showtimeStartTime; ?></span>
                                         <p></p>
                                     </li>
                                 </ul>
@@ -103,7 +176,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="clearfix">
                                         <label>Seats</label>
                                         <ul id="ulBookedSeats">
-                                            <li id="liSeat_82">H9</li>
+                                            <?php
+                                            foreach ($selectedSeatNumbers as $selectedSeat) {
+                                                echo "<li id='liSeat_$selectedSeat'>$selectedSeat</li>";
+                                            }
+                                            ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -115,11 +192,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sfCalculationTicket sfCalculationTable" id="tblTicketPurchase">
                                         <tbody>
                                             <tr>
-                                                <td id="tdTicketTypeId_1" name="1">Recliner</td><td>1</td><td>*</td><td> Rs. 250.00</td><td>=</td><td> Rs. 250.00</td>
+                                                <td id="tdTicketTypeId_1" name="1">Recliner</td><td><?php echo $num; ?></td><td>*</td><td> Rs. <?php echo $ticketPrice; ?></td><td>=</td><td> Rs. <?php echo $total; ?></td>
                                             </tr>
                                             <tr style="display:none">
                                                 <td id="tdTicketTypeId_2" name="2">Lounge</td>
-                                                <td>0</td><td>*</td><td> Rs. 250.00</td><td>=</td><td> Rs. 0.00</td>
+                                                <td>0</td><td>*</td><td> Rs. <?php echo $total ?></td><td>=</td><td> Rs. 0.00</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -127,11 +204,11 @@ if (!isset($_SESSION['user_id'])) {
                                         <tbody>
                                             <tr>
                                                 <td class="sfBrdRgt sfBtdTop">Sub total</td>
-                                                <td class="sfBtdTop"><span>Rs. &nbsp;</span><span id="spanSubTotalTicket">250.00</span></td>
+                                                <td class="sfBtdTop"><span>Rs. &nbsp;</span><span id="spanSubTotalTicket"><?php echo $total; ?></span></td>
                                             </tr>
                                             <tr>
                                                 <td class="sfBrdRgt  sfTotal">Total</td>
-                                                <td class="sfTotal"><span>Rs. &nbsp;</span><span id="spanTotalTicket">250.00</span></td>
+                                                <td class="sfTotal"><span>Rs. &nbsp;</span><span id="spanTotalTicket"><?php echo $total; ?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>

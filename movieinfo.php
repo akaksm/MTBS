@@ -30,13 +30,34 @@ if (isset($_GET['id'])) {
             $movieDuration = $row['movieDuration'];
 
             
-            mysqli_close($con);
+            
         } else {
             echo '<h4 class="no-annot">Movie not found</h4>';
         }
     } else {
         echo "ERROR: Couldn't execute the query: " . mysqli_error($con);
     }
+
+    $date = '2023-08-13';
+
+    $sql = "SELECT t.name AS theater_name, t.location AS theater_location, s.date, s.start_time, s.status, s.screen_id
+            FROM showtime s
+            INNER JOIN theater t ON s.screen_id = t.theater_id
+            WHERE s.movie_id = $movieId";
+    $result = mysqli_query($con, $sql);
+
+
+    $showtimes = [];
+
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $showtimes[] = $row;
+        }
+    }
+
+
+    mysqli_close($con);
 } else {
     echo '<h4 class="no-annot">Movie ID not provided</h4>';
 }
@@ -70,137 +91,87 @@ if (isset($_GET['id'])) {
         <div class="movies-details">
 
           <div class="movie-trailer">
+
             <iframe id="videoFrame" width="100%" height="650" <?php echo $iframeSrc; ?> frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen="" style="width: 100%;"></iframe>
+
           </div>
 
           <div class="movies-info" itemscope="" itemtype="https://schema.org/Movie">
+
             <h1 class="h11"><?php echo $movieTitle; ?></h1>
             <h4><?php echo $movieGenre; ?></h4>
             <p itemprop="description"><?php echo $description; ?></p>
             <ul class="movie-cast">
               <li itemprop="director" itemscope="" itemtype="https://schema.org/Person">
-                <span itemprop="name">Director :&nbsp;</span><?php echo $movieDirector; ?></li>
+                <span itemprop="name">Director :&nbsp;</span><?php echo $movieDirector; ?>
+              </li>
               <li itemprop="actor" itemscope="" itemtype="https://schema.org/Person">
-                <span itemprop="name">Cast :&nbsp;</span> <?php echo $movieActors; ?></li>
+                <span itemprop="name">Cast :&nbsp;</span> <?php echo $movieActors; ?>
+              </li>
               <li>
-                <span>Release On :&nbsp;</span> <?php echo $movieRelDate; ?></li>
+                <span>Release On :&nbsp;</span> <?php echo $movieRelDate; ?>
+              </li>
               <li>
-                <span>Duration :&nbsp;</span> <?php echo $movieDuration; ?></li>
+                <span>Duration :&nbsp;</span> <?php echo $movieDuration; ?>
+              </li>
             </ul>
-            <div class="detail-timing">
+
 
           </div>
 
         </div>
-        </div>                                   
+                                   
       </div>
 
-      <div id="lytA_ctl20_showTimings" class="view-time">
-
-        <div class="nowshowing-detail seat-status-info">
-
-          <h2 class="inner-header"><span>Viewing Times</span></h2>
-
-          <ul>
+<div id="lytA_ctl20_showTimings" class="view-time">
+    <div class="nowshowing-detail seat-status-info">
+        <h2 class="inner-header"><span>Viewing Times</span></h2>
+        <ul>
             <li>Sold <span class="sold">&nbsp;</span></li>
             <li>Fast-Filling <span class="booked">&nbsp;</span></li>
             <li>Available <span class="available">&nbsp;</span></li>
-          </ul>
-
-          <div class="selectShowDays">
-
+        </ul>
+        <div class="selectShowDays">
             <ul id="ulShowDays">
-              <li class="active" value="08/13/2023"><a href="javascript:void(0);" class="tomm">Today</a></li>
-              <li class="" value="08/14/2023"><a href="javascript:void(0);" class="tomm">Tomm</a></li>
-              <li class="" value="08/15/2023"><a href="javascript:void(0);" class="">15<br>Aug</a></li>
-              <li class="" value="08/16/2023"><a href="javascript:void(0);" class="">16<br>Aug</a></li>
-              <li class="" value="08/17/2023"><a href="javascript:void(0);" class="">17<br>Aug</a></li>
+                <!-- Generate date links dynamically -->
+                <?php
+                foreach ($showtimes as $showtime) {
+                    $formattedDate = date('m/d/Y', strtotime($showtime['date']));
+                    $isActive = ($showtime['date'] == $date) ? 'active' : '';
+                    echo '<li value="' . $formattedDate . '"><a href="javascript:void(0);" class="' . $isActive . '">' . date('d', strtotime($showtime['date'])) . '<br>' . date('M', strtotime($showtime['date'])) . '</a></li>';
+                }
+                ?>
             </ul>
-
-          </div>
-
         </div>
-
-        <div class="view-show-time">
-
-          <div class="audi-time">
-
-            <div class="audi-info multiLocation ">
-
-      				<p><span data-sage-model="locationname">Kalimati Trade Center, Kalimati</span></p>
-              <p style="display:none;"><span data-sage-model="address" class="location-adddress">Kalimati -  Kathmandu</span></p>
-
-      			</div>
-
-            <div class="show-time-info-wrap">
-
-              <div class="showtime-wrap">
-
-              <ul class="show-time-info">
-                <li><a data-sage-model="showtime" class="no-available" href="#">08:00 AM</a></li>
-                <li><a data-sage-model="showtime" class="fast-filling" href="/booking.aspx/movieid/10357/showid/24110">03:30 PM</a></li>
-                <li><a data-sage-model="showtime" class="fast-filling" href="/booking.aspx/movieid/10357/showid/24106">05:15 PM</a></li>
-                <li><a data-sage-model="showtime" class="available" href="/booking.aspx/movieid/10357/showid/24107">08:45 PM</a></li>
-              </ul>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="audi-time">
-
-          <div class="audi-info multiLocation ">
-
-      		  <p><span data-sage-model="locationname">Eyeplex Mall, New Baneshwor</span></p>
-            <p style="display:none;"><span data-sage-model="address" class="location-adddress">Kathmandu</span></p>
-
-      	  </div>
-
-          <div class="show-time-info-wrap">
-
-            <div class="showtime-wrap">
-
-              <ul class="show-time-info">
-                <li><a data-sage-model="showtime" class="no-available" href="#">07:45 AM</a></li>
-                <li><a data-sage-model="showtime" class="no-available" href="#">11:00 AM</a></li>
-                <li><a data-sage-model="showtime" class="no-available" href="#">02:15 PM</a></li>
-                <li><a data-sage-model="showtime" class="fast-filling" href="/booking.aspx/movieid/10357/showid/24115">05:30 PM</a></li>
-                <li><a data-sage-model="showtime" class="available" href="/booking.aspx/movieid/10357/showid/24116">08:45 PM</a></li>
-              </ul>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- <div class="show-time-dom d-none">
-
-          <div class="audi-time"><div class="audi-info multiLocation d-none">
-
-      			<p><span data-sage-model="locationname"></span></p>
-            <p style="display:none;"><span data-sage-model="address" class="location-adddress"></span></p>
-
-      		</div>
-
-          <div class="audi-info singleLocation d-none">
-
-      		  <p><span data-sage-model="Screen"></span></p>
-
-      	  </div>
-
-          <ul class="show-time-info">
-            <li><a data-sage-model="showtime" class="" href="#"></a></li>
-            <div class="no-movie">No show Available</div>
-          </ul>
-
-        </div> -->
-
-
-
-      </div>
+    </div>
+    <div class="view-show-time">
+        <?php
+        foreach ($showtimes as $showtime) {
+            echo '<div class="audi-time">';
+            echo '<div class="audi-info multiLocation ">';
+            echo '<p><span data-sage-model="locationname">' . $showtime['theater_name'] . ', ' . $showtime['theater_location'] . '</span></p>';
+            echo '</div>';
+            echo '<div class="show-time-info-wrap">';
+            echo '<div class="showtime-wrap">';
+            echo '<ul class="show-time-info">';
+            
+            
+            $showtimeClass = 'no-available'; 
+            if ($showtime['status'] === 'fast-filling') {
+                $showtimeClass = 'fast-filling';
+            } elseif ($showtime['status'] === 'available') {
+                $showtimeClass = 'available';
+            }
+            
+            echo '<li><a data-sage-model="showtime" class="' . $showtimeClass . '" href="booking.php?id=' . $movieId. '&screen_id='. $showtime['screen_id'] .'">' . date('h:i A', strtotime($showtime['start_time'])) . '</a></li>';
+            echo '</ul>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+        ?>
+    </div>
+</div>
 
     </section>
 

@@ -1,10 +1,12 @@
 const container = document.querySelector(".container");
-const seats = document.querySelectorAll(".row .seat:not(.occupied");
+const seats = document.querySelectorAll(".row .seat:not(.sold)");
 const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
+const selectedSeatsInput = document.getElementById("selectedSeatsInput");
 
 populateUI();
+
 let ticketPrice = +movieSelect.value;
 
 // Save selected movie index and price
@@ -13,7 +15,7 @@ function setMovieData(movieIndex, moviePrice) {
   localStorage.setItem("selectedMoviePrice", moviePrice);
 }
 
-// update total and count
+// Update total and count
 function updateSelectedCount() {
   const selectedSeats = document.querySelectorAll(".row .seat.selected");
 
@@ -21,23 +23,30 @@ function updateSelectedCount() {
 
   localStorage.setItem("selectedSeats", JSON.stringify(seatsIndex));
 
-  //copy selected seats into arr
-  // map through array
-  //return new array of indexes
-
   const selectedSeatsCount = selectedSeats.length;
 
   count.innerText = selectedSeatsCount;
   total.innerText = selectedSeatsCount * ticketPrice;
+
+  setMovieData(movieSelect.selectedIndex, movieSelect.value);
 }
 
-// get data from localstorage and populate ui
+// Function to update the hidden input field with selected seat IDs
+function updateSelectedSeatsInput() {
+  const selectedSeats = document.querySelectorAll(".row .seat.selected");
+  const selectedSeatIds = [...selectedSeats].map((seat) => seat.id);
+  selectedSeatsInput.value = selectedSeatIds.join(","); // Store as a comma-separated list
+}
+
+
+// Get data from localstorage and populate UI
 function populateUI() {
   const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats"));
+
   if (selectedSeats !== null && selectedSeats.length > 0) {
     seats.forEach((seat, index) => {
       if (selectedSeats.indexOf(index) > -1) {
-        seat.classList.add("selected");
+        console.log(seat.classList.add("selected"));
       }
     });
   }
@@ -46,9 +55,10 @@ function populateUI() {
 
   if (selectedMovieIndex !== null) {
     movieSelect.selectedIndex = selectedMovieIndex;
+    console.log(selectedMovieIndex)
   }
 }
-
+console.log(populateUI())
 // Movie select event
 movieSelect.addEventListener("change", (e) => {
   ticketPrice = +e.target.value;
@@ -60,13 +70,16 @@ movieSelect.addEventListener("change", (e) => {
 container.addEventListener("click", (e) => {
   if (
     e.target.classList.contains("seat") &&
-    !e.target.classList.contains("occupied")
+    !e.target.classList.contains("sold")
   ) {
     e.target.classList.toggle("selected");
 
     updateSelectedCount();
+    updateSelectedSeatsInput(); // Update the hidden input field
   }
 });
 
-// intial count and total
+// Initial count and total set
 updateSelectedCount();
+
+
