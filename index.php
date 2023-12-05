@@ -9,8 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +25,6 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
 <?php include 'header.php'; ?>
-
 
   <section class="container">
     <div class="slider-wrapper">
@@ -60,7 +57,7 @@ if (!isset($_SESSION['user_id'])) {
   <?php
     if($result = mysqli_query($con,$sql)){
       if(mysqli_num_rows($result)>0){
-        for($i=0; $i<=8; $i++){
+        for($i=0; $i<=7; $i++){
           $row = mysqli_fetch_array($result);
           echo '<div class="bx">';
           echo '<a href="movieinfo.php?id=' . $row['movie_id'] . '">';

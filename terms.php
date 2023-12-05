@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +16,13 @@ if (!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/terms.css" /> 
     <title>KSM | Cinemas</title>
-  <link rel="shortcut icon" type="image/png" href="img/icon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="img/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <?php include 'header.php' ?>
-
 
 <div class="terms-condition">
   <h2><strong>Terms and Conditions</strong></h2>
@@ -148,9 +146,7 @@ if (!isset($_SESSION['user_id'])) {
   <p>As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.</p>
 </div>
 
-
 <?php include 'footer.php' ?>
-
 
 </body>
 </html>

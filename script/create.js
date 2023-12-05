@@ -22,20 +22,17 @@ function validateForm() {
   var password = document.forms["registrationForm"]["cust_pass"].value;
   var rememberMe = document.getElementById("register-check").checked;
 
-  // Check if any of the required fields are empty
   if (fname === "" || lname === "" || email === "" || password === "") {
     alert("Please fill in all the fields.");
     return false;
   }
 
-  // Validate email format
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email.match(emailRegex)) {
     alert("Please enter a valid email address.");
     return false;
   }
 
-  // Validate password complexity
   var passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
   if (!password.match(passwordRegex)) {
@@ -45,7 +42,6 @@ function validateForm() {
     return false;
   }
 
-  // Validate the checkbox (I agree to terms and conditions)
   if (!rememberMe) {
     alert("Please check the Remember Me box.");
     return false;
@@ -53,7 +49,6 @@ function validateForm() {
 
   return true;
 
-  // Validate login form
   var loginUsername =
     document.forms["registrationFormm"]["login_username"].value;
   var loginPassword =

@@ -8,9 +8,9 @@ if ($id =='') {
 	exit;
 }
 
-$sql = "DELETE FROM users WHERE custid = $id";
+$query = "DELETE FROM `movietable` WHERE movie_id = $id";
 
-$result = $mysqli->query($sql);
+$movieresults = $mysqli->query($query);
 
 header('Location: .admin/index.php');
 

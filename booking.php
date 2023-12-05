@@ -56,7 +56,6 @@ if (isset($_GET['id']) && isset($_GET['screen_id'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,11 +69,9 @@ if (isset($_GET['id']) && isset($_GET['screen_id'])) {
   </head>
   <body>
 
-
       <video autoplay loop muted plays-inline class="back-video">
         <source src="img/vid.mp4" type="video/mp4">
       </video>
-
 
     <div class="main">
 
@@ -87,7 +84,7 @@ if (isset($_GET['id']) && isset($_GET['screen_id'])) {
                         <span class="booking-date"><?php echo $showtimeDate; ?></span>
                         <span class="booking-time"><?php echo $showtimeStartTime; ?></span>
                     </div>
-                    <a class="close-menu"><i class="fa-solid fa-xmark"></i></a>
+                    <a href="movieinfo.php" class="close-menu"><i class="fa-solid fa-xmark"></i></a>
                 </div>
             </div>
         </div>
@@ -136,7 +133,6 @@ if (isset($_GET['id']) && isset($_GET['screen_id'])) {
           >
         </p>
         <form action="bookingConfirm.php" method="post">
-          <!-- Other form fields if any -->
           <input type="hidden" id="selectedSeatsInput" name="selectedSeats" value="">
           <input type="hidden" name="movieId" value="<?php echo $movieId; ?>">
           <input type="hidden" name="screenId" value="<?php echo $screenId; ?>">

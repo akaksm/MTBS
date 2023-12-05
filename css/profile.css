@@ -196,6 +196,53 @@ header{
     scale: 0.95;
   }
   
+/* Center the ticket history section */
+.ticket-history-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+}
+
+.ticket-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 512px;
+  height: 200px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.ticket-container h2{
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Style the table */
+.ticket-history-section table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+}
+
+/* Style the table header */
+.ticket-history-section th {
+  background-color: #1a1e24; /* Set the header background color */
+  color: white; /* Set the header text color */
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style the table rows */
+.ticket-history-section td {
+  padding: 10px;
+  border-bottom: 1px solid #48525e; /* Set the border color */
+  background-color: #1a1e24; /* Set the row background color */
+  color: white; /* Set the row text color */
+}
 
 
   /* footer css */

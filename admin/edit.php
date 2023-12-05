@@ -5,7 +5,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 
 if ($id =='') {
 	print "Invalid ID<br>";
-	print "<a href='index.php'>Back to List Page</a>";
+	print "<a href='.admin/index.php'>Back to List Page</a>";
 	exit;
 }
 
@@ -15,7 +15,7 @@ $result = mysqli_query($con,$sql);
 
 if ($result->num_rows != 1) {
 	print "Invalid ID<br>";
-	print "<a href='index.php'>Back to List Page</a>";
+	print "<a href='.admin/index.php'>Back to List Page</a>";
 	exit;
 }
 

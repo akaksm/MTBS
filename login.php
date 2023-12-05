@@ -1,14 +1,11 @@
 <?php
 
-
-
 include 'connect.php';
 
 if (isset($_POST['login_submit'])) {
     $loginUsername = mysqli_real_escape_string($con, $_POST['login_username']);
     $loginPassword = mysqli_real_escape_string($con, $_POST['login_password']);
 
-    // Query the database to check if the username/email exists
     $loginQuery = "SELECT cust_id, fname, lname, cust_pass FROM users WHERE cust_email = ?";
     $stmt = mysqli_prepare($con, $loginQuery);
     mysqli_stmt_bind_param($stmt, 's', $loginUsername);
@@ -18,7 +15,6 @@ if (isset($_POST['login_submit'])) {
     if (mysqli_num_rows($loginResult) > 0) {
         $row = mysqli_fetch_assoc($loginResult);
         $hashedPassword = $row['cust_pass'];
-
 
         if (password_verify($loginPassword, $hashedPassword)) {
 
@@ -31,7 +27,6 @@ if (isset($_POST['login_submit'])) {
             header('Location: index.php');
             exit;
         } else {
-            // Incorrect password
             ?>
             <script>
                 alert("Incorrect password. Please try again.");
@@ -42,7 +37,6 @@ if (isset($_POST['login_submit'])) {
                 exit;
         }
     } else {
-        // User not found
         ?>
         <script>
             alert("User not found. Please check your Email.");

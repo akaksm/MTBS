@@ -6,20 +6,17 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-
 if (isset($_GET['id'])) {
     $movieId = $_GET['id'];
 
     include "connect.php";
-
-    
+ 
     $sql = "SELECT * FROM movietable WHERE movie_id = $movieId";
 
     if ($result = mysqli_query($con, $sql)) {
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_array($result);
-
-           
+          
             $iframeSrc = $row['iframe'];
             $movieTitle = $row['movieTitle'];
             $movieGenre = $row['movieGenre'];
@@ -28,8 +25,6 @@ if (isset($_GET['id'])) {
             $movieActors = $row['movieActors'];
             $movieRelDate = $row['movieRelDate'];
             $movieDuration = $row['movieDuration'];
-
-            
             
         } else {
             echo '<h4 class="no-annot">Movie not found</h4>';
@@ -38,17 +33,16 @@ if (isset($_GET['id'])) {
         echo "ERROR: Couldn't execute the query: " . mysqli_error($con);
     }
 
-    $date = '2023-08-13';
+    $date = '2023-12-01';
 
     $sql = "SELECT t.name AS theater_name, t.location AS theater_location, s.date, s.start_time, s.status, s.screen_id
-            FROM showtime s
-            INNER JOIN theater t ON s.screen_id = t.theater_id
-            WHERE s.movie_id = $movieId";
+FROM showtime s
+JOIN theater t ON s.theater_id = t.theater_id
+WHERE s.movie_id = $movieId;
+";
     $result = mysqli_query($con, $sql);
 
-
     $showtimes = [];
-
 
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
@@ -56,14 +50,11 @@ if (isset($_GET['id'])) {
         }
     }
 
-
     mysqli_close($con);
 } else {
     echo '<h4 class="no-annot">Movie ID not provided</h4>';
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +83,7 @@ if (isset($_GET['id'])) {
 
           <div class="movie-trailer">
 
-            <iframe id="videoFrame" width="100%" height="650" <?php echo $iframeSrc; ?> frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen="" style="width: 100%;"></iframe>
+            <iframe id="videoFrame" width="100%" height="650" src="<?php echo $iframeSrc; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen="" style="width: 100%;"></iframe>
 
           </div>
 
@@ -116,7 +107,6 @@ if (isset($_GET['id'])) {
               </li>
             </ul>
 
-
           </div>
 
         </div>
@@ -133,7 +123,6 @@ if (isset($_GET['id'])) {
         </ul>
         <div class="selectShowDays">
             <ul id="ulShowDays">
-                <!-- Generate date links dynamically -->
                 <?php
                 foreach ($showtimes as $showtime) {
                     $formattedDate = date('m/d/Y', strtotime($showtime['date']));
@@ -173,7 +162,7 @@ if (isset($_GET['id'])) {
     </div>
 </div>
 
-    </section>
+</section>
 
   <?php include 'footer.php'; ?>
 

@@ -37,7 +37,6 @@ if (!isset($_SESSION['user_id'])) {
         </form>
       </section>
 
-
       <?php include 'footer.php'; ?> 
 </body>
 </html>

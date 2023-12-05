@@ -3,26 +3,20 @@
   </video>
 
   <script>
-        // Get the video element
         const video = document.getElementById('myVideo');
 
-        // Check if there is a saved playback position in localStorage
         const savedPosition = localStorage.getItem('videoPosition');
 
         if (savedPosition) {
-            // Set the saved playback position
             video.currentTime = parseFloat(savedPosition);
         }
 
-        // Add an event listener to save the playback position when the video ends
         video.addEventListener('ended', function () {
-            // Save the current playback position in localStorage
             localStorage.setItem('videoPosition', video.currentTime);
         });
     </script>
 
   <header>
-
 
     <div class="navbar">
 

@@ -1,11 +1,15 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: create.php');
     exit;
 }
+    include "connect.php";
+    $userID = $_SESSION['user_id'];
+    $profileQuery = "SELECT * FROM users WHERE cust_id='$userID'";
+    $profileResult = mysqli_query($con, $profileQuery);
+    $profileData = mysqli_fetch_assoc($profileResult);
 
 if (isset($_POST['movieId']) && isset($_POST['screenId']) && isset($_POST['selectedSeats'])) {
     $movieId = $_POST['movieId'];
@@ -13,41 +17,31 @@ if (isset($_POST['movieId']) && isset($_POST['screenId']) && isset($_POST['selec
     $selectedSeatsQuery = $_POST['selectedSeats'];
 
     $selectedSeats = explode(',', $selectedSeatsQuery);
-
     $num = count($selectedSeats);
-
     $updatedSeatIDs = [];
 
     foreach ($selectedSeats as $seatID) {
-    $updatedSeatID = $seatID + 1; // Increase the seat ID by one
+    $updatedSeatID = $seatID + 1;
     $updatedSeatIDs[] = $updatedSeatID;
-}
+    }
 
     $updatedSeatIDsString = implode(",", $updatedSeatIDs);
 
-
     include "connect.php";
-
     $selectedSeatNumbers = [];
 
-    if (!empty($updatedSeatIDsString)) {
-        // Prepare the SQL query using the IN operator
-        $sql = "SELECT seat_no FROM seat WHERE seat_id IN ($updatedSeatIDsString)";
-        
-        // Execute the query
-        $result = mysqli_query($con, $sql);
-        
+    if (!empty($updatedSeatIDsString)) {     
+        $sql = "SELECT seat_no FROM seat WHERE seat_id IN ($updatedSeatIDsString)";               
+        $result = mysqli_query($con, $sql);        
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
-                // Add each seat number to the array
+                
                 $selectedSeatNumbers[] = $row['seat_no'];
             }
         } else {
             echo "Error executing SQL query: " . mysqli_error($con);
         }
     }
-
-
 
     $sqlMovie = "SELECT m.movieTitle, t.name AS theater_name, t.location AS theater_location, s.date AS showtime_date, s.start_time AS showtime_start_time, s.ticket_price
     FROM movietable m
@@ -65,23 +59,17 @@ if (isset($_POST['movieId']) && isset($_POST['screenId']) && isset($_POST['selec
             $theaterLocation = $rowShowtime['theater_location'];
             $showtimeDate = $rowShowtime['showtime_date'];
             $showtimeStartTime = $rowShowtime['showtime_start_time'];
-            $ticketPrice = $rowShowtime['ticket_price'];
-            
+            $ticketPrice = $rowShowtime['ticket_price'];           
         } else {
             echo '<h4 class="no-annot">Movie not found</h4>';
         }
     } else {
         echo "ERROR: Couldn't execute the query: " . mysqli_error($con);
     }
-
     $total = $num*$ticketPrice;
-
-    include_once 'config.php'; 
-
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,135 +84,153 @@ if (isset($_POST['movieId']) && isset($_POST['screenId']) && isset($_POST['selec
   <script src="https://kit.fontawesome.com/d0ece00d26.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-<?php include 'header.php'; ?>
-
-<div class="sfContainer sfCol_100 sfInnerPage" id="sfInnerPage">
-
-	<div class="sfContainer sfCol_100 sfInnerwrapper clearfix" id="sfInnerwrapper">
-
-		<div class="sfModule ">
-
-            
-            <span class="sfPosition">Booking Confirmation</span>
-            <div class="sfModulecontent clearfix">
-                <div class="bookingContentWrapper">
-                    <div class="sfBookingContent sfCol_65">
-                        <div class="booking-cart">
-                            <h3 class="booking-title">My Cart</h3>
-                            <table width="100%" border="0" cellpadding="0" class="total-cart">
-                                <tbody>
-                                    <tr>
-                                        <td>Ticket Total</td>
-                                        <td class="sfTotal">Rs. <span id="lytA_ctl34_tdTicketTotal"><?php echo $total; ?></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="coupon-wrapper">            
-                                <table width="100%" border="0" cellspacing="0" class="ticket-charge">
+    <?php include 'header.php'; ?>
+    <div class="sfContainer sfCol_100 sfInnerPage" id="sfInnerPage">
+    	<div class="sfContainer sfCol_100 sfInnerwrapper clearfix" id="sfInnerwrapper">
+    		<div class="sfModule ">
+                <span class="sfPosition">Booking Confirmation</span>
+                <div class="sfModulecontent clearfix">
+                    <div class="bookingContentWrapper">
+                        <div class="sfBookingContent sfCol_65">
+                            <div class="booking-cart">
+                                <h3 class="booking-title">My Cart</h3>
+                                <table width="100%" border="0" cellpadding="0" class="total-cart">
                                     <tbody>
                                         <tr>
-                                            <td class="sfBrdRgt sfBtdTop">Sub Total</td>
-                                            <td class="sfBtdTop sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanSubTotalTicket"><?php echo $total; ?></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="sfBrdRgt  sfTotal">Grand Total</td>
-                                            <td class="sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanTotal"><?php echo $total; ?></span></td>
+                                            <td>Ticket Total</td>
+                                            <td class="sfTotal">Rs. <span id="lytA_ctl34_tdTicketTotal"><?php echo $total; ?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="clearfix"></div>
-                            <h3 class="booking-title">Buy Online With</h3>
-                            <ul class="booking-summary-payment">
-                                <li>
-                                    <span data-paymentid="3" class="lnkPayment" title="Pay by PayPal">
-                                        <img src="img/paypal1.png">
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="selection sfCol_35">
-                        <div class="sfUserSummary sfTactileNoiseBg">
-                            <div class="summary-pannel">
-                                <h6 class=" booking-title">Your Summary Panel</h6>
-                                <ul class="sfSummaryDetails list-items">
-                                    <li class="clearfix">
-                                        <label>Movie</label>
-                                        <span class="spanMovie"><?php echo $movieTitle; ?></span>
-                                        <p></p>
-                                    </li>
-                                    <li class="clearfix">
-                                        <label>Screen</label>
-                                        <span class="spanScreen"><?php echo $theaterName."&nbsp&gt&nbsp".$theaterLocation; ?></span>
-                                        <p></p>
-                                    </li>
-                                    <li class="clearfix">
-                                        <label>Date</label>
-                                        <span id="spanDate"><?php echo $showtimeDate; ?></span>
-                                        <p></p>
-                                    </li>
-                                    <li class="clearfix">
-                                        <label>Time</label>
-                                        <span class="spanTime"><?php echo $showtimeStartTime; ?></span>
-                                        <p></p>
+                                <div class="coupon-wrapper">            
+                                    <table width="100%" border="0" cellspacing="0" class="ticket-charge">
+                                        <tbody>
+                                            <tr>
+                                                <td class="sfBrdRgt sfBtdTop">Sub Total</td>
+                                                <td class="sfBtdTop sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanSubTotalTicket"><?php echo $total; ?></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="sfBrdRgt  sfTotal">Grand Total</td>
+                                                <td class="sfTotal"><span>Rs. &nbsp;</span><span id="lytA_ctl34_spanTotal"><?php echo $total; ?></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="clearfix"></div>
+                                <h3 class="booking-title">Book Your Ticket</h3>
+                                <ul class="booking-summary-payment">
+                                    <li>
+                                        <span data-paymentid="3" class="lnkPayment" title="Pay by PayPal">
+                                            <button id="paypalButton" class="btn">Book Now</button>
+                                        </span>
                                     </li>
                                 </ul>
-                                <div class="sfSummaryDetails">
-                                    <div class="clearfix">
-                                        <label>Seats</label>
-                                        <ul id="ulBookedSeats">
-                                            <?php
-                                            foreach ($selectedSeatNumbers as $selectedSeat) {
-                                                echo "<li id='liSeat_$selectedSeat'>$selectedSeat</li>";
-                                            }
-                                            ?>
-                                        </ul>
+                            </div>
+                        </div>
+                        <div class="selection sfCol_35">
+                            <div class="sfUserSummary sfTactileNoiseBg">
+                                <div class="summary-pannel">
+                                    <h6 class=" booking-title">Your Summary Panel</h6>
+                                    <ul class="sfSummaryDetails list-items">
+                                        <li class="clearfix">
+                                            <label>Movie</label>
+                                            <span class="spanMovie"><?php echo $movieTitle; ?></span>
+                                            <p></p>
+                                        </li>
+                                        <li class="clearfix">
+                                            <label>Screen</label>
+                                            <span class="spanScreen"><?php echo $theaterName."&nbsp&gt&nbsp".$theaterLocation; ?></span>
+                                            <p></p>
+                                        </li>
+                                        <li class="clearfix">
+                                            <label>Date</label>
+                                            <span id="spanDate"><?php echo $showtimeDate; ?></span>
+                                            <p></p>
+                                        </li>
+                                        <li class="clearfix">
+                                            <label>Time</label>
+                                            <span class="spanTime"><?php echo $showtimeStartTime; ?></span>
+                                            <p></p>
+                                        </li>
+                                    </ul>
+                                    <div class="sfSummaryDetails">
+                                        <div class="clearfix">
+                                            <label>Seats</label>
+                                            <ul id="ulBookedSeats">
+                                                <?php
+                                                foreach ($selectedSeatNumbers as $selectedSeat) {
+                                                    echo "<li id='liSeat_$selectedSeat'>$selectedSeat</li>";
+                                                }
+                                                ?>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <h4 class="sfGoldTxt sfPriMrgTop">Your Shopping Cart</h4>
-                            <div id="divShoppingCart">
-                                <div class="sfShoppingCartDetails ticketPricing ticket-summary">
-                                    <h6 class="booking-title">Tickets</h6>
-                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sfCalculationTicket sfCalculationTable" id="tblTicketPurchase">
-                                        <tbody>
-                                            <tr>
-                                                <td id="tdTicketTypeId_1" name="1">Recliner</td><td><?php echo $num; ?></td><td>*</td><td> Rs. <?php echo $ticketPrice; ?></td><td>=</td><td> Rs. <?php echo $total; ?></td>
-                                            </tr>
-                                            <tr style="display:none">
-                                                <td id="tdTicketTypeId_2" name="2">Lounge</td>
-                                                <td>0</td><td>*</td><td> Rs. <?php echo $total ?></td><td>=</td><td> Rs. 0.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sfCalculationTable">
-                                        <tbody>
-                                            <tr>
-                                                <td class="sfBrdRgt sfBtdTop">Sub total</td>
-                                                <td class="sfBtdTop"><span>Rs. &nbsp;</span><span id="spanSubTotalTicket"><?php echo $total; ?></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="sfBrdRgt  sfTotal">Total</td>
-                                                <td class="sfTotal"><span>Rs. &nbsp;</span><span id="spanTotalTicket"><?php echo $total; ?></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <h4 class="sfGoldTxt sfPriMrgTop">Your Shopping Cart</h4>
+                                <div id="divShoppingCart">
+                                    <div class="sfShoppingCartDetails ticketPricing ticket-summary">
+                                        <h6 class="booking-title">Tickets</h6>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sfCalculationTicket sfCalculationTable" id="tblTicketPurchase">
+                                            <tbody>
+                                                <tr>
+                                                    <td id="tdTicketTypeId_1" name="1">Recliner</td><td><?php echo $num; ?></td><td>*</td><td> Rs. <?php echo $ticketPrice; ?></td><td>=</td><td> Rs. <?php echo $total; ?></td>
+                                                </tr>
+                                                <tr style="display:none">
+                                                    <td id="tdTicketTypeId_2" name="2">Lounge</td>
+                                                    <td>0</td><td>*</td><td> Rs. <?php echo $total ?></td><td>=</td><td> Rs. 0.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sfCalculationTable">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="sfBrdRgt sfBtdTop">Sub total</td>
+                                                    <td class="sfBtdTop"><span>Rs. &nbsp;</span><span id="spanSubTotalTicket"><?php echo $total; ?></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="sfBrdRgt  sfTotal">Total</td>
+                                                    <td class="sfTotal"><span>Rs. &nbsp;</span><span id="spanTotalTicket"><?php echo $total; ?></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-
         </div>
     </div>
-</div>
-</div>
-
     <?php include 'footer.php'; ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('paypalButton').addEventListener('click', function() {
+        var updatedSeatIDsString = "<?php echo $updatedSeatIDsString; ?>";
+        var userID = "<?php echo $userID; ?>";
+        var movieTitle = "<?php echo $movieTitle; ?>";
+        var showtimeDate = "<?php echo $showtimeDate; ?>";
+        var ticketPrice = "<?php echo $ticketPrice; ?>";
+
+        document.getElementById('updatedSeatIDsInput').value = updatedSeatIDsString;
+        document.getElementById('user_idInput').value = userID;
+        document.getElementById('movieTitleInput').value = movieTitle;
+        document.getElementById('showtimeDateInput').value = showtimeDate;
+        document.getElementById('ticketPriceInput').value = ticketPrice;
+
+        document.getElementById('seatUpdateForm').submit();
+    });
+});
+</script>
+
+<form id="seatUpdateForm" action="updateSeats.php" method="post" style="display: none;">
+    <input type="hidden" name="updatedSeatIDs" id="updatedSeatIDsInput" value="">
+    <input type="hidden" name="user_id" id="user_idInput" value="">
+    <input type="hidden" name="movieTitle" id="movieTitleInput" value="">
+    <input type="hidden" name="showtimeDate" id="showtimeDateInput" value="">
+    <input type="hidden" name="ticketPrice" id="ticketPriceInput" value="">
+</form>
+
 </body>
 </html>
